@@ -17,12 +17,12 @@ class PlayerBar extends Component {
           </section>
           <section id = "time-control">
             <div className = "current-time">–:––</div>
-            <input type = "range" className="seek-bar" value = "0" />
+            <input type = "range" className="seek-bar" defaultValue = "0"/>
             <div className = "total-time">–:––</div>
           </section>
           <section id = "volume-control">
               <div className = "icon ion-volume-low"></div>
-              <input type = "range" className = "seek-bar" value = "80" />
+              <input type = "range" className = "seek-bar" defaultValue = "80" />
               <div className = "ion-volume-high"></div>
           </section>
         </section>

@@ -15,13 +15,12 @@ class Album extends Component {
       currentSong: album.songs[0],
       currentTime: 0,
       duration: album.songs[0].duration,
-      currentVolume: .60,
+      volume: 80,
       isPlaying: false
     };
 
     this.audioElement = document.createElement('audio');
     this.audioElement.src = album.songs[0].audioSrc;
-    this.formatTime = this.formatTime.bind(this);
   }
 
   play() {
@@ -42,20 +41,20 @@ class Album extends Component {
       durationchange: e => {
         this.setState({ duration: this.audioElement.duration});
       },
-      volumeupdate: e=>{
-        this.setState({currentVolume: this.audioElement.currentVolume})
+      volumechange: e => {
+        this.setState({volume: this.state.volume})
       },
     };
     this.audioElement.addEventListener('timeupdate',this.eventListeners.timeupdate);
     this.audioElement.addEventListener('durationchange',this.eventListeners.durationchange);
-    this.audioElement.addEventListener('volumecontrol', this.eventListeners.volumecontrol);
+    this.audioElement.addEventListener('volumechange', this.eventListeners.volumechange);
   }
 
   componentWillUnmount(){
     this.audioElement.src=null;
     this.audioElement.removeEventListener('timeupdate', this.eventListeners.timeupdate);
     this.audioElement.removeEventListener('durationchange', this.eventListeners.durationchange);
-    this.audioElement.removeEventListener('volumecontrol', this.eventListeners.volumecontrol);
+    this.audioElement.removeEventListener('volumechange', this.eventListeners.volumechange);
   }
 
   setSong(song){
@@ -97,20 +96,22 @@ class Album extends Component {
 
   handleVolumeChange(e){
     const newVolume = e.target.value;
-    this.audioElement.currentVolume= newVolume;
-    this.setState({currentVolume: newVolume});
-    this.audioElement.value = newVolume;
+    this.setState({volume: newVolume});
+    this.audioElement.volume= newVolume;
   }
 
   formatTime(timeSeconds) {
     const minutes = Math.floor(timeSeconds / 60);
     const seconds = Math.floor(timeSeconds - minutes * 60);
-    if (isNaN(timeSeconds)) {
-      return "-:--";
-    } else {
-      return minutes + ":" + (seconds < 10 ? "0" + seconds : seconds);
+    if (!isNaN(timeSeconds)&& seconds <10) {
+      return minutes + ':0' + seconds;
+    } else if (seconds >= 10){
+      return minutes + ':' + seconds;
     }
-  }
+      else {
+        return '-:--'
+      }
+    }
 
   render() {
     return (
@@ -154,13 +155,13 @@ class Album extends Component {
             currentSong={this.state.currentSong}
             currentTime={this.audioElement.currentTime}
             duration={this.audioElement.duration}
-            currentVolume={this.audioElement.currentVolume}
-            formatTime={this.formatTime}
+            volume={this.state.volume}
             handleSongClick={() => this.handleSongClick(this.state.currentSong)}
             handlePrevClick={() => this.handlePrevClick()}
             handleNextClick={() => this.handleNextClick()}
             handleTimeChange={(e) => this.handleTimeChange(e)}
             handleVolumeChange={(e) => this.handleVolumeChange(e)}
+            formatTime={(timeSeconds) => this.formatTime(timeSeconds)}
           />
          </section>
     );

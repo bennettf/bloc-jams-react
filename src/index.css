@@ -1,5 +1,59 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: Robot;
+  background-color: #F4F4F4;
+}
+
+h1 {
+  font-family: "Roboto";
+  font-size: 30px;
+  margin-top: 30px;
+  margin-bottom: 15px;
+}
+
+h2  {
+  font-family: "Roboto";
+  font-size: 20px;
+  margin-top: 30px;
+  margin-bottom: 15px;
+}
+
+.album #album-cover-art {
+  height: 400px;
+  width: 400px;
+}
+
+.album-details #album-title{
+  font-size: 20px;
+  margin-bottom: 1rem;
+}
+
+nav {
+  background-color: #e2e2e2;
+}
+
+.library{
+  display:flex;
+  flex-direction: row;
+  margin: 2rem;
+}
+
+.player-bar{
+  margin-tip: 3rem;
+}
+
+#song-list {
+  width: 50%;
+  margin: auto;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+#buttons button {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  color: black;
+  background: #e2e2e2;
+  cursor: pointer;
 }
